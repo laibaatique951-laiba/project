@@ -1,0 +1,83 @@
+
+
+ <title>Job Seeker Login</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #fff0f5, #ffffff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+<body>
+
+    {% include 'navigation.html' %}
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card p-4 shadow fade-in" style="max-width: 450px; width: 100%; border-radius: 20px;">
+            <h3 class="text-center text-primary mb-4">Job Seeker Login</h3>
+
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label"><b>Email ID</b></label>
+                    <input type="email" name="uname" class="form-control" placeholder="Enter email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label"><b>Password</b></label>
+                    <input type="password" name="pwd" class="form-control" placeholder="Enter password" required autocomplete="new-password">
+                </div>
+
+                <div class="d-grid mb-2">
+                    <input type="submit" value="Login" class="btn btn-primary">
+                </div>
+
+                <div class="d-grid mb-2">
+                    <a href="{% url 'user_signup' %}" class="btn btn-outline-primary">Create an Account</a>
+                </div>
+
+                <div class="text-center mt-2">
+                    <p class="note">Don't remember your password? <a href="{% url 'studentuser_forgot_password' %}">Forgot Password?</a></p>
+                </div>
+
+                <div class="text-center note mt-2">
+                    NOTE: You must enter valid credentials to log in successfully.
+                </div>
+
+                {% if error == "no" %}
+                <script>
+                    alert("Login Successful");
+                    window.location = ("{% url 'user_home' %}");
+                </script>
+                {% endif %}
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>

@@ -1,0 +1,171 @@
+{% load static %}
+
+{% include 'user_navigation.html' %}
+<marquee style="font-family : 'Monotype Corsiva' ; font-size :25px ;color:white; background-color:#008CBA ; font-weight:bold;margin-top:1%">
+ searching dashboard
+</marquee>
+
+<!-- for navbar responsive-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<!-- for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    .job-card {
+        max-width: 900px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        padding: 35px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .job-image {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .job-title {
+        font-size: 30px;
+        font-weight: bold;
+        color: #003d66;
+    }
+
+    .company-name {
+        font-size: 18px;
+        color: #888;
+    }
+
+    .meta-info i {
+        color: #007bff;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .meta-info p {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .section-heading {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0056b3;
+        margin-bottom: 10px;
+    }
+
+    .section-box {
+        border: 1.5px solid #d2d2d2;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        transition: 0.3s;
+    }
+
+    .section-box:hover {
+        background-color: #f1f9ff;
+        border-color: #007bff;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+    }
+
+    .highlight {
+        font-weight: bold;
+        color: #0069d9;
+    }
+
+    .btn-apply {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 25px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: 0.3s;
+        margin-top: 20px;
+    }
+
+    .btn-apply:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-back {
+        margin-top: 15px;
+    }
+</style>
+
+<div class="container-fluid px-4">
+
+    <h2 class="text-center text-success mt-4 mb-5">
+        <i class="fa-solid fa-briefcase me-2"></i>Matching Jobs
+    </h2>
+
+    {% if jobs %}
+        {% for job in jobs %}
+            <div class="job-card">
+                {% if job.image %}
+                    <img src="{{ job.image.url }}" alt="Job Image" class="job-image">
+                {% endif %}
+
+                <h2 class="job-title">{{ job.title }}</h2>
+                <p class="company-name">
+                    <i class="fa-solid fa-building"></i> {{ job.recruiter.company }}
+                </p>
+
+                <div class="meta-info mt-3">
+                    <p><i class="fa-solid fa-location-dot"></i> <span class="highlight">{{ job.location }}</span></p>
+                    <p><i class="fa-solid fa-calendar-days"></i> Posted on: <span class="highlight">{{ job.creationdate }}</span></p>
+                    <p><i class="fa-solid fa-dollar-sign"></i> Salary: <span class="highlight">{{ job.salary }}</span></p>
+                </div>
+
+                <!-- Section Boxes -->
+                <div class="section-box">
+                    <div class="section-heading"><i class="fa-solid fa-circle-info"></i> Overview</div>
+                    <p>{{ job.description }}</p>
+                </div>
+
+                <div class="section-box">
+                    <div class="section-heading"><i class="fa-solid fa-user-tie"></i> Experience Required</div>
+                    <p>{{ job.experience }}</p>
+                </div>
+
+                <div class="section-box">
+                    <div class="section-heading"><i class="fa-solid fa-screwdriver-wrench"></i> Skills</div>
+                    <p>{{ job.skills }}</p>
+                </div>
+
+                <div class="section-box">
+                    <div class="section-heading"><i class="fa-solid fa-calendar-check"></i> Start Date</div>
+                    <p>{{ job.start_date }}</p>
+                </div>
+
+                <div class="section-box">
+                    <div class="section-heading"><i class="fa-solid fa-calendar-xmark"></i> End Date</div>
+                    <p>{{ job.end_date }}</p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="text-center">
+                    <a href="{% url 'applyforjob' job.id %}" class="btn btn-apply">
+                        <i class="fa-solid fa-paper-plane"></i> Apply Now
+                    </a>
+                    <div class="btn-back">
+                        <a href="{% url 'latestjobs' %}" class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-arrow-left"></i> Back to Latest Jobs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning text-center">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i> No jobs found matching your search.
+        </div>
+    {% endif %}
+</div>

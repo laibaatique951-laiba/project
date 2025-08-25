@@ -1,0 +1,18 @@
+{% include 'recruiter_navigation.html' %}
+<div class="container mt-4">
+  <h4>My Feedbacks</h4>
+  <table class="table table-bordered">
+    <thead><tr><th>Message</th><th>Rating</th><th>Reply</th><th>Status</th></tr></thead>
+    <tbody>
+     {% for fb in my_feedbacks %}
+  <tr>
+    <td>{{ fb.message }}</td>
+    <td>{{ fb.rating }} ★</td>
+    <td>{{ fb.admin_reply|default:"No reply yet" }}</td>
+    <td>{{ fb.status }}</td>
+  </tr>
+{% endfor %}
+
+    </tbody>
+  </table>
+</div>
